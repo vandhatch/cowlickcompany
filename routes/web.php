@@ -13,5 +13,11 @@
 
 Route::get('/', function () {
 	$posts = App\Post::all();
+<<<<<<< HEAD
     return view('welcome', $posts);
+=======
+    return view('welcome', compact('posts'));
+>>>>>>> 986a01d... add msql and posts
 });
+
+Route::get('/posts/{id}', "PostController@show");
