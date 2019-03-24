@@ -93,6 +93,14 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+
+                <div class="posts">
+                    @if ($posts)
+                        @foreach ($posts as $post)
+                        <div class="post">{{ $post->description() }}</div>
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </body>
