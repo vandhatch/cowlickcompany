@@ -6,9 +6,13 @@
 		@csrf
 		<div class="field">
 			<label for="body" class="label">Body</label>
-			<input type="text" name="body" class="input">
+			<div class="control">
+				<input type="text" name="body" class="input{{ $errors->has('body') ? ' is-danger' : '' }}" value="{{ old('body') }}">
+			</div>
 		</div>
 
 		<button type="submit" class="button">Create</button>
 	</form>
+
+	@include('errors')
 @endsection

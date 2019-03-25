@@ -36,6 +36,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate([
+            'body'=> ['required', 'min:3']
+        ]);
         Post::create($request->all()); 
         return redirect('/posts');
     }
@@ -48,8 +51,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post = Post::find($post);
-        return view('posts.show', $post);
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -72,8 +74,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->body = $request->body;
-        $post->save();
+        $attributes = $request->validate([
+            'body' => 'required'
+        ]);
+        $post->update($attributes);
         return redirect('/posts');
     }
 

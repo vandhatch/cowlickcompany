@@ -1,102 +1,52 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout')
 
-        <title>Laravel</title>
+@section('title', "Post: {$post->body}")
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+@section('content')
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+<h1 class="title">{{ $post->body }}</h1>
+<div class="field">
+    <div class="control">
+        <a href="/posts/{{ $post->id }}/edit" class="button">edit</a>
+    </div>
+</div>
 
-            .full-height {
-                height: 100vh;
-            }
+<div class="box">
+    <h2 class="title is-4">Tasks</h2>
+    @if ($post->tasks->count())
+        @foreach ($post->tasks as $task)
+        <form action="/tasks/{{ $task->id }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <label for="completed" class="checkbox">
+                <input type="checkbox" name="completed" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
+                {{ $task->description }}
+            </label>
+        </form>
+        @endforeach
+    @else
+        <div class="content">
+            <p>There are no tasks</p>
+        </div>
+    @endif
+</div>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-
-                
-                <div class="post">{{ $post->body }}</div>
+<div class="box">
+    <h2 class="title is-5">Add A Task</h2>
+    <form method="POST" action="/posts/{{ $post->id }}/tasks">
+        @csrf
+        <div class="field">
+            <label for="description" class="label">Description</label>
+            <div class="control">
+                <input type="text" class="input{{ $errors->has('description') ? ' is-danger' :  ''}}" name="description">
             </div>
         </div>
-    </body>
-</html>
+        <div class="field">
+            <div class="control"><button class="button" type="submit">Submit</button></div>
+        </div>
+    </form>
+
+    @include('errors')
+</div>
+
+@endsection
