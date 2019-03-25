@@ -97,20 +97,10 @@
                 <div class="posts">
                     @if (!empty($posts))
                         @foreach ($posts as $post)
-<<<<<<< HEAD
-                        <div class="post">{{ $post->description }}</div>
-                        @endforeach
-                    @endif
-                </div>
-                <pre>
-                    <?= $posts ?>
-                </pre>
-=======
                         <div class="post">{{ $post->body }}</div>
                         @endforeach
                     @endif
                 </div>
->>>>>>> 986a01d... add msql and posts
             </div>
         </div>
     </body>

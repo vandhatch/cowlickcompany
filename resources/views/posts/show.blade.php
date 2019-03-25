@@ -95,7 +95,7 @@
                 </div>
 
                 
-                <div class="post">{{ $post->description }}</div>
+                <div class="post">{{ $post->body }}</div>
             </div>
         </div>
     </body>
