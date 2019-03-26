@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 	protected $fillable = [
-		'body'
+		'body',
+		'owner_id'
 	];
 
 	public function tasks()
@@ -18,5 +19,10 @@ class Post extends Model
 	public function addTask($task)
 	{
 		$this->tasks()->create($task);
+	}
+
+	public function owner()
+	{
+		return $this->belongsTo(User::class);
 	}
 }

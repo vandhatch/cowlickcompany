@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Mail\ProjectCreated;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = auth()->user()->posts;
         return view('posts.index', compact('posts'));
     }
 
@@ -36,10 +42,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $attributes = request()->validate([
             'body'=> ['required', 'min:3']
         ]);
-        Post::create($request->all()); 
+        $attributes['owner_id'] = auth()->id();
+        $post = Post::create($attributes); 
+        \Mail::to($post->owner->email)->send(
+            new ProjectCreated($post)
+        );
         return redirect('/posts');
     }
 
@@ -51,6 +61,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $this->authorize('update', $post);
         return view('posts.show', compact('post'));
     }
 
@@ -77,6 +88,7 @@ class PostController extends Controller
         $attributes = $request->validate([
             'body' => 'required'
         ]);
+        $attributes['owner_id'] = auth()->id();
         $post->update($attributes);
         return redirect('/posts');
     }

@@ -21,3 +21,7 @@ Route::resource('/posts', "PostController");
 
 Route::post('/posts/{post}/tasks', 'PostTasksController@store');
 Route::patch('/tasks/{task}', 'PostTasksController@update');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
