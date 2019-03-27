@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-	$posts = App\Post::all();
-
-    return view('welcome', compact('posts'));
-});
+Route::get('/', 'PagesController@home');
 
 Route::resource('/posts', "PostController");
 
