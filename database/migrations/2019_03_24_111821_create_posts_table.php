@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('owner_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
