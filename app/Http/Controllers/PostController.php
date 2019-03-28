@@ -47,7 +47,7 @@ class PostController extends Controller
         ]);
         $attributes['owner_id'] = auth()->id();
         $post = Post::create($attributes); 
-        \Mail::to($post->owner->email)->send(
+        \Mail::to($post->owner->email)->queue(
             new ProjectCreated($post)
         );
         return redirect('/posts');
