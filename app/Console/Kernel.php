@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('telescope:prune --hours=48')->daily();
-        $schedule->command('queue:work --tries=3')->everyMinute()->withoutOverlapping();
+        $schedule->command('queue:work --sleep=5 --tries=3 --stop-when-empty')->everyMinute()->withoutOverlapping();
     }
 
     /**
