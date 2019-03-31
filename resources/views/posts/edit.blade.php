@@ -5,7 +5,7 @@
 @section('content')
 	<h1 class="title">Edit Project</h1>
 	
-	<form method="post" action="/posts/{{ $post->id }}" style="margin-bottom: 1rem;">
+	<form method="post" action="{{ url("/posts/{$post->id}") }}" style="margin-bottom: 1rem;">
 		@csrf
     	@method('PATCH')
 		<div class="field">
@@ -17,7 +17,7 @@
 
 	@include('errors')
 
-	<form action="/posts/{{ $post->id }}" method="post">
+	<form action="{{ url("/posts/{$post->id}") }} " method="post">
 		@csrf
 		@method('DElETE')
 		<button type="submit" class="button is-danger">Delete Post</button>

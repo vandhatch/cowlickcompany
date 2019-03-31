@@ -2,7 +2,7 @@
 
 @section('content')
 	<h1 class="title">Create Post</h1>
-	<form method="post" action="/posts">
+	<form method="post" action="{{ url("/posts") }}">
 		@csrf
 		<div class="field">
 			<label for="body" class="label">Body</label>

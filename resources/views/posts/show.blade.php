@@ -7,7 +7,7 @@
 <h1 class="title">{{ $post->body }}</h1>
 <div class="field">
     <div class="control">
-        <a href="/posts/{{ $post->id }}/edit" class="button">edit</a>
+        <a href="{{ url("/posts/{$post->id}/edit") }}" class="button">edit</a>
     </div>
 </div>
 
@@ -15,7 +15,7 @@
     <h2 class="title is-4">Tasks</h2>
     @if ($post->tasks->count())
         @foreach ($post->tasks as $task)
-        <form action="/tasks/{{ $task->id }}" method="POST">
+        <form action="{{ url("/tasks/{$task->id}") }}" method="POST">
             @csrf
             @method('PATCH')
             <label for="completed" class="checkbox">
@@ -33,7 +33,7 @@
 
 <div class="box">
     <h2 class="title is-5">Add A Task</h2>
-    <form method="POST" action="/posts/{{ $post->id }}/tasks">
+    <form method="POST" action="{{ url("/posts/{$post->id}/tasks") }}">
         @csrf
         <div class="field">
             <label for="description" class="label">Description</label>

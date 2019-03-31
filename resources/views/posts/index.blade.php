@@ -10,7 +10,7 @@
 			@foreach($posts as $post)
 				<div class="media">
 					<div class="media-content">
-						<a href="/posts/{{ $post->id }}">{{ $post->body }}</a>	
+						<a href="{{ url("/posts/{$post->id}") }}">{{ $post->body }}</a>	
 					</div>
 				</div>
 			@endforeach
